@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "30c0f7585f8d2a0310dda73712308cc6",
+    "content-hash": "748911bab9556a4136c89b5d20db3af6",
     "packages": [
         {
             "name": "brick/math",
@@ -134,6 +134,65 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "chumputy/ulhandhu-php",
+            "version": "dev-main",
+            "dist": {
+                "type": "path",
+                "url": "../ulhandhu-php",
+                "reference": "cf6463793143c1f3e8fcf25917b5ea08e9c44077"
+            },
+            "require": {
+                "guzzlehttp/guzzle": "^7.9",
+                "illuminate/http": "^11.0",
+                "illuminate/support": "^11.0",
+                "php": "^8.2"
+            },
+            "conflict": {
+                "illuminate/http": "<11.0",
+                "illuminate/support": "<11.0"
+            },
+            "require-dev": {
+                "laravel/pint": "^1.20",
+                "orchestra/testbench": "^9.0",
+                "pestphp/pest": "^2.36",
+                "phpstan/phpstan": "^2.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Chumputy\\Ulhandhu\\UlhandhuServiceProvider"
+                    ],
+                    "aliases": {
+                        "Ulhandhu": "Chumputy\\Ulhandhu\\Facades\\Ulhandhu"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Chumputy\\Ulhandhu\\": "src/"
+                }
+            },
+            "autoload-dev": {
+                "psr-4": {
+                    "Chumputy\\Ulhandhu\\Tests\\": "tests/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ubaidulla Ali",
+                    "email": "ubaidulla.aly@gmail.com"
+                }
+            ],
+            "description": "A Laravel package for interacting with third Transport API",
+            "transport-options": {
+                "relative": true
+            }
         },
         {
             "name": "dflydev/dot-access-data",
@@ -9284,7 +9343,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {},
+    "stability-flags": {
+        "chumputy/ulhandhu-php": 20
+    },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
