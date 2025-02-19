@@ -1,60 +1,94 @@
 <script setup>
 import {ref} from "vue";
-import {router, useForm} from "@inertiajs/vue3";
-import DomainCard from "@/Pages/Vehicle/DomainCard.vue";
+import {router} from "@inertiajs/vue3";
+import Select from "@/Components/Select.vue";
+import 'boxicons'
+import Sidebar from "@/Components/Sidebar.vue";
 
 const props = defineProps({
-    domains: Object,
+    errors: Object,
 })
 
-const query = ref('');
-const hasResults = ref(false);
+const params = route().params;
+const search = ref('');
 const filter = ref('owner');
+const isSearching = ref(false);
+const searchOptions = [
+    {value: 'owner', label: 'Owner'},
+    // {value: 'vehicle', label: 'Vehicle'},
+];
 
 
 // Methods
 const handleSearch = async () => {
-    if (!query.value) return
+    if (!search.value) return
+
+    isSearching.value = true;
 
     const params = {
-        [filter.value]: query.value,
+        [filter.value]: search.value,
     }
 
-    router.get(route('domains.index'), params, {
+    router.get(route('vehicles.index'), params, {
         preserveState: true,
         onSuccess: (data) => console.log(data),
         onError: (err) => console.log(err),
+        onFinish: () => isSearching.value = false,
     });
-    hasResults.value = true;
+
 }
 </script>
 
 <template>
-    <form @submit.prevent="handleSearch">
-        <div class="flex flex-col items-center justify-center h-screen p-4 transition-all"
-             :class="{ 'pt-6 h-auto': hasResults }">
-            <div class="flex space-x-5 w-full max-w-xl transition-all duration-300 "
-                 :class="hasResults ? '-translate-y-1/2' : ''">
-                <input
-                    v-model="query"
-                    type="text"
-                    placeholder="Search..."
-                    @focus="hasResults = true"
-                    class="w-full px-4 py-3 text-lg border rounded-lg shadow-md outline-none transition-all duration-300 focus:outline-none"
-                />
-                <select v-model="filter">
-                    <option value="owner" >Owner</option>
-                    <option value="vehicle">Vehicle</option>
-                </select>
-            </div>
-            <div v-if="hasResults && domains"
-                 class="w-3/4 mt-4 bg-white shadow-lg rounded-lg p-4 max-w-xl opacity-100 transition-all duration-800">
+    <div class="flex">
 
-                <div v-for="(domain, index) in domains" :key="index" class="py-2 border-b last:border-none">
-                    <DomainCard :domain="domain"/>
+        <Sidebar/>
+
+        <div class="h-screen w-full">
+
+            <div class="text-center mb-8 mt-12">
+                <h1 class="text-5xl font-medium tracking-tight text-green-900 mb-3">
+                    Ulhandhu Search
+                </h1>
+                <p class="text-lg text-green-400 max-w-2xl mx-auto font-light">
+                    Search vehicle domains, vehicles registered at the Ministry of Transport and Civil Aviation
+                </p>
+
+                <div class="mt-6 flex justify-center">
+                    <div class="h-px w-full bg-gradient-to-r from-transparent via-green-400 to-transparent"/>
                 </div>
-
             </div>
+            <form @submit.prevent="handleSearch">
+                <div class="flex flex-col items-center mt-10 p-4 transition-all">
+                    <div class="flex space-x-5 w-full max-w-2xl transition-all duration-300">
+                        <Select
+                            v-model="filter"
+                            :options="searchOptions"
+                            placeholder="Search By"
+                            :disabled="isSearching"
+                            class="w-[12em]"
+                        />
+                        <input
+                            v-model="search"
+                            type="text"
+                            placeholder="Search by NID..."
+                            class="w-full px-4 py-3 text-lg bg-gray-100 border-gray-50 rounded-lg
+                            focus:ring-1 focus:ring-green-200 border hover:border-gray-300 focus:border-green-500
+                            outline-none transition-all duration-300"
+                        />
+
+                        <button class=" flex items-center justify-center w-32 rounded-lg bg-gray-100
+                        focus:ring-1 focus:ring-green-200 border hover:border-gray-300 text-gray-500 hover:text-gray-400"
+                                :disabled=isSearching
+                                type="submit">
+                            <i class='bx bx-search text-4xl '></i>
+                        </button>
+
+                    </div>
+                    <p class="text-red-600 text-sm" v-for="key in Object.keys(errors)">{{ errors[key] }}</p>
+                </div>
+            </form>
+
         </div>
-    </form>
+    </div>
 </template>

@@ -19,6 +19,10 @@ Route::get('domains', [DomainController::class, 'index'])
     ->middleware('guest')
     ->name('domains.index');
 
+Route::get('vehicles', [DomainController::class, 'vehicle'])
+    ->middleware('guest')
+    ->name('vehicles.index');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

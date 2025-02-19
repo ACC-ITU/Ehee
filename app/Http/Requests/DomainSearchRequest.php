@@ -23,7 +23,16 @@ class DomainSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner' => ['sometimes', 'string', 'starts_with:A', 'max:7'],
+            'owner' => ['required', 'string', 'starts_with:A', 'size:7', 'alpha_num'],
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'owner.starts_with' => 'NID must start with an A',
+            'owner.size' => 'NID must be 7 characters',
+            'owner.alpha_num' => 'Invalid NID number',
         ];
     }
 }
