@@ -5,6 +5,19 @@ defineProps({
         required: true
     }
 });
+
+function formatDate(dateString) {
+    const date = new Date(dateString.replace(" ", "T"));
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false
+    })
+}
 </script>
 
 <template>
@@ -22,15 +35,15 @@ defineProps({
         <div class="space-y-3">
             <div class="flex items-center text-gray-600">
                 <span class="w-36 text-sm">Registered No:</span>
-                <span class="font-medium">{{ domain.vehicle_registration_no }}</span>
+                <span class="font-medium">{{ domain.vehicle_registration_no ?? '-'}}</span>
             </div>
             <div class="flex items-center text-gray-600">
                 <span class="w-36 text-sm">Issued At:</span>
-                <span class="font-medium">{{ domain.issued_at }}</span>
+                <span class="font-medium">{{ formatDate(domain.issued_at) ?? '-' }}</span>
             </div>
             <div class="flex items-center text-gray-600">
                 <span class="w-36 text-sm">Expiry At:</span>
-                <span class="font-medium">{{ domain.expiry_at }}</span>
+                <span class="font-medium">{{ formatDate(domain.expiry_at) ?? '-' }}</span>
             </div>
             <div class="flex items-center text-gray-600">
                 <span class="w-36 text-sm">Base:</span>

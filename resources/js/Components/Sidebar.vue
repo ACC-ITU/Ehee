@@ -172,6 +172,6 @@ const mainButtons = [
 // Logout handler
 const handleLogout = () => {
     console.log('Logout clicked')
-    useForm().post(route('login'));
+    useForm().post(route('logout'));
 }
 </script>

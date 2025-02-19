@@ -1,6 +1,4 @@
 <script setup>
-
-// Tab configuration
 import DomainCard from "@/Pages/Vehicle/Partials/DomainCard.vue";
 import OwnerCard from "@/Pages/Vehicle/Partials/OwnerCard.vue";
 import TabBar from "@/Components/TabBar.vue";
@@ -22,7 +20,7 @@ const tabs = [
 const domains = computed(() => {
     const domains = [];
     props.registries.map((registry) => {
-        return domains.push(...registry.domains);
+        domains.push(...registry.domains);
     })
     return domains;
 });
@@ -37,6 +35,11 @@ const vehicles = computed(() => {
     })
     return vehicles;
 });
+
+const ownerParam = route().params['owner'];
+const currentOwner = computed(() => {
+    return props.registries[0].owners.find(owner => owner.ownerDetails.identifier === ownerParam)
+})
 </script>
 
 
@@ -45,7 +48,7 @@ const vehicles = computed(() => {
         <div class="min-h-screen bg-gray-50 py-8">
             <div class="max-w-7xl mx-auto px-4">
                 <!-- Owner Profile -->
-                <OwnerCard :owner="registries[0].owners[0].ownerDetails" class="mb-8"/>
+                <OwnerCard :owner="currentOwner.ownerDetails" class="mb-8"/>
 
                 <!-- Tab System -->
                 <TabBar :tabs="tabs">
@@ -78,6 +81,7 @@ const vehicles = computed(() => {
                                 v-for="vehicle in registries"
                                 :key="vehicle.id"
                                 :registry="vehicle"
+                                :owner="currentOwner"
                             />
                         </div>
                     </template>

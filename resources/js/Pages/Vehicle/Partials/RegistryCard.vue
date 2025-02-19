@@ -6,6 +6,10 @@ defineProps({
     registry: {
         type: Object,
         required: true
+    },
+    owner: {
+        type: Object,
+        required: true
     }
 })
 
@@ -35,6 +39,10 @@ const isDrawerOpen = ref(false);
 function openOwnersDrawer() {
     isDrawerOpen.value = true;
 }
+
+function isTheOwner() {
+    // return props.registry.
+}
 </script>
 
 <template>
@@ -42,12 +50,21 @@ function openOwnersDrawer() {
     <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-semibold text-green-600">{{ registry.registration_no }}</h3>
-            <span
-                class="px-3 py-1 rounded-full text-sm"
-                :class="registry.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
-            >
+            <div>
+                <span
+                    class="px-3 py-1 rounded-full text-sm"
+                    :class="registry.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                >
+                {{ registry.active ? 'Active' : 'InActive' }}
+              </span>
+                <span
+                    class="px-3 py-1 rounded-full text-sm"
+                    :class="registry.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                >
             {{ registry.active ? 'Active' : 'InActive' }}
           </span>
+            </div>
+
         </div>
 
         <div class="space-y-3">
