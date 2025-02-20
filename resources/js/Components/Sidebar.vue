@@ -1,9 +1,29 @@
+<script setup>
+import {router, useForm} from "@inertiajs/vue3";
+import {ref} from "vue";
+
+const isOpen = ref(false)
+
+// Main buttons configuration
+const mainButtons = [
+    {icon: "bx bxs-car", action: () => router.visit(route('domains.index'))},
+    {icon: "bx bx-credit-card-alt", action: () => router.visit(route('domains.index'))},
+    {icon: "bx bx-water", action: () => router.visit(route('domains.index'))},
+]
+
+// Logout handler
+const handleLogout = () => {
+    console.log('Logout clicked')
+    useForm().post(route('logout'));
+}
+</script>
+
 <template>
-    <div>
+    <div >
         <!-- Hamburger button -->
         <button
             @click="isOpen = !isOpen"
-            class="fixed top-4 left-4 p-2 rounded-lg hover:bg-gray-100 transition-colors z-50"
+            class="fixed top-4 left-4 p-2 rounded-lg hover:bg-gray-100 transition-colors z-50 "
         >
             <svg
                 class="w-6 h-6"
@@ -32,7 +52,7 @@
             <div
                 v-if="isOpen"
                 @click="isOpen = false"
-                class="fixed inset-0 bg-black/20 z-40"
+                class="fixed inset-0 bg-black/20 z-40 "
             />
         </Transition>
 
@@ -47,7 +67,7 @@
         >
             <div
                 v-if="isOpen"
-                class="fixed top-0 left-0 h-full w-20 bg-white shadow-lg z-50 flex flex-col items-center"
+                class="fixed top-0 left-0 h-full w-20 bg-white shadow-lg z-50 flex flex-col items-center "
             >
                 <!-- Main buttons container -->
                 <div class="flex-1 w-full pt-16 flex flex-col items-center gap-4">
@@ -86,21 +106,3 @@
         </Transition>
     </div>
 </template>
-
-<script setup>
-import {router, useForm} from "@inertiajs/vue3";
-import {ref} from "vue";
-
-const isOpen = ref(false)
-
-// Main buttons configuration
-const mainButtons = [
-    {icon: "bx bxs-car", action: () => router.visit(route('domains.index'))},
-]
-
-// Logout handler
-const handleLogout = () => {
-    console.log('Logout clicked')
-    useForm().post(route('logout'));
-}
-</script>

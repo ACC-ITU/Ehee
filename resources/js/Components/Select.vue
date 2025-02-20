@@ -61,7 +61,7 @@ onClickOutside(selectRef, () => {
         <!-- Select Button -->
         <button
             type="button"
-            class="relative w-full min-h-16 px-4 py-2 bg-gray-100 text-left border rounded-lg shadow-sm outline-none transition-all duration-200
+            class="relative w-full min-h-16 px-4 py-2 bg-white text-left border rounded-lg shadow-sm outline-none transition-all duration-200
             hover:border-gray-300
             focus:ring-1 focus:ring-green-200
             disabled:bg-gray-50 disabled:text-gray-500 disabled:cursor-not-allowed"
@@ -69,22 +69,22 @@ onClickOutside(selectRef, () => {
             @click="toggle"
             :disabled="disabled"
         >
-      <span class="block truncate" :class="{ 'text-gray-500': !modelValue }">
+        <span class="block truncate" :class="{ 'text-gray-500': !modelValue }">
         {{ displayValue }}
-      </span>
+        </span>
 
             <!-- Chevron Icon -->
-            <span class="absolute inset-y-0 right-0 flex items-center pl-2 pr-1 pointer-events-none">
-        <svg
-            class="w-4 h-4 text-gray-400 transition-transform duration-200"
-            :class="{ 'rotate-180': isOpen }"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-        >
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
-        </svg>
-      </span>
+            <span class="absolute inset-y-0 right-0 flex items-center  pr-2 pointer-events-none">
+                <svg
+                    class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                    :class="{ 'rotate-180': isOpen }"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+          </span>
         </button>
 
         <!-- Options Dropdown -->
@@ -106,9 +106,9 @@ onClickOutside(selectRef, () => {
                     @click="selectOption(option)"
                     class="relative px-4 py-2 cursor-pointer select-none transition-colors"
                     :class="{
-            'bg-green-50 text-green-600': modelValue === option.value,
-            'text-gray-900 hover:bg-gray-50': modelValue !== option.value
-          }"
+                    'bg-green-50 text-green-600': modelValue === option.value,
+                    'text-gray-900 hover:bg-gray-50': modelValue !== option.value
+                    }"
                 >
                     {{ option.label }}
                 </li>

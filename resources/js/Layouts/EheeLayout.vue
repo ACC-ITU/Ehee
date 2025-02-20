@@ -6,8 +6,10 @@ const mobileNavOpen = ref(false);
 </script>
 
 <template>
-    <sidebar />
-    <slot />
+    <div class="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+        <sidebar/>
+        <slot/>
+    </div>
 </template>
 
 <style scoped>

@@ -41,59 +41,57 @@ const handleSearch = async () => {
 
 <template>
     <EheeLayout>
-        <div>
-            <div class="h-screen w-full">
+        <div class="flex flex-col w-full h-full pt-20">
+            <div class="text-center w-full">
 
-                <div class="text-center mb-4 mt-12 w-full">
+                <DotLottieVue style="height: 100px; width: 100px" autoplay loop src="/images/car_pulse_animation.lottie"
+                              class="mx-auto"/>
 
-                    <DotLottieVue style="height: 100px; width: 100px" autoplay loop src="/images/car_pulse_animation.lottie" class="mx-auto" />
+                <h1 class="text-5xl font-medium tracking-tight text-green-800 mb-3">
+                    Ulhandhu Search
+                </h1>
 
-                    <h1 class="text-5xl font-medium tracking-tight text-green-900 mb-3">
-                        Ulhandhu Search
-                    </h1>
+                <p class="text-l text-gray-700 max-w-3xl mx-auto font-light">
+                    Search vehicles, domains registered at the Ministry of Transport and Civil Aviation
+                </p>
 
-                    <p class="text-lg text-gray-400 max-w-2xl mx-auto font-light">
-                        Search vehicle domains, vehicles registered at the Ministry of Transport and Civil Aviation
-                    </p>
-
-                    <div class="mt-6 flex justify-center">
-                        <div class="h-px w-full bg-gradient-to-r from-transparent via-green-400 to-transparent"/>
-                    </div>
-
+                <div class="mt-6 flex justify-center">
+                    <div class="h-px w-full bg-gradient-to-r from-transparent via-green-400 to-transparent"/>
                 </div>
 
-                <form @submit.prevent="handleSearch">
-                    <div class="flex flex-col items-center mt-10 p-4 transition-all">
-                        <div class="flex space-x-5 w-full max-w-2xl transition-all duration-300">
-                            <Select
-                                v-model="filter"
-                                :options="searchOptions"
-                                placeholder="Search By"
-                                :disabled="isSearching"
-                                class="w-[12em]"
-                            />
-                            <input
-                                v-model="search"
-                                type="text"
-                                placeholder="Search by NID..."
-                                class="w-full px-4 py-3 text-lg bg-gray-100 border-gray-50 rounded-lg
+            </div>
+
+            <form @submit.prevent="handleSearch">
+                <div class="flex flex-col items-center mt-10 p-4 transition-all">
+                    <div class="flex space-x-5 w-full max-w-2xl transition-all duration-300">
+                        <div class="w-48">
+                        <Select
+                            v-model="filter"
+                            :options="searchOptions"
+                            placeholder="Search By"
+                            :disabled="isSearching"
+                        />
+                        </div>
+                        <input
+                            v-model="search"
+                            type="text"
+                            placeholder="Search by NID..."
+                            class="w-full px-4 py-3 text-lg bg-white border-gray-50 rounded-lg
                             focus:ring-1 focus:ring-green-200 border hover:border-gray-300 focus:border-green-500
                             outline-none transition-all duration-300"
-                            />
+                        />
 
-                            <button class=" flex items-center justify-center w-32 rounded-lg bg-gray-100
+                        <button class=" flex items-center justify-center rounded-lg bg-white px-3
                         focus:ring-1 focus:ring-green-200 border hover:border-gray-300 text-gray-500 hover:text-gray-400"
-                                    :disabled=isSearching
-                                    type="submit">
-                                <i class='bx bx-search text-4xl '></i>
-                            </button>
+                                :disabled=isSearching
+                                type="submit">
+                            <i class='bx bx-search text-4xl w-10 h-10'></i>
+                        </button>
 
-                        </div>
-                        <p class="text-red-600 text-sm mt-10" v-for="key in Object.keys(errors)">{{ errors[key] }}</p>
                     </div>
-                </form>
-
-            </div>
+                    <p class="text-red-600 text-sm mt-10" v-for="key in Object.keys(errors)">{{ errors[key] }}</p>
+                </div>
+            </form>
         </div>
 
     </EheeLayout>

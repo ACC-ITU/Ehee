@@ -45,7 +45,7 @@ const currentOwner = computed(() => {
 
 <template>
     <EheeLayout>
-        <div class="min-h-screen bg-gray-50 py-8">
+        <div class=" py-8">
             <div class="max-w-7xl mx-auto px-4">
 
                 <!-- Owner Profile -->
