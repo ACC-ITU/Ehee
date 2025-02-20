@@ -2,12 +2,12 @@
 import OwnershipDrawer from "@/Pages/Vehicle/Partials/OwnershipDrawer.vue";
 import {ref} from "vue";
 
-defineProps({
+const props = defineProps({
     registry: {
         type: Object,
         required: true
     },
-    owner: {
+    searchedOwner: {
         type: Object,
         required: true
     }
@@ -41,7 +41,8 @@ function openOwnersDrawer() {
 }
 
 function isTheOwner() {
-    // return props.registry.
+    const owner = props.registry.owners.find(owner => props.searchedOwner.owner_id === owner.owner_id);
+    return owner.status
 }
 </script>
 
@@ -50,7 +51,7 @@ function isTheOwner() {
     <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-semibold text-green-600">{{ registry.registration_no }}</h3>
-            <div>
+            <div class="space-x-4">
                 <span
                     class="px-3 py-1 rounded-full text-sm"
                     :class="registry.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
@@ -59,9 +60,9 @@ function isTheOwner() {
               </span>
                 <span
                     class="px-3 py-1 rounded-full text-sm"
-                    :class="registry.active ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
+                    :class="isTheOwner() ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
                 >
-            {{ registry.active ? 'Active' : 'InActive' }}
+            {{ isTheOwner() ? 'Owned' : 'Not Owned' }}
           </span>
             </div>
 

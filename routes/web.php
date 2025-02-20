@@ -25,5 +25,15 @@ Route::middleware('auth')->group(function () {
         ->name('vehicles.index');
 });
 
+Route::get('/images/{filename}', function ($filename) {
+    $path = resource_path("images/{$filename}");
+
+    if (file_exists($path)) {
+        return Response::file($path);
+    }
+
+    abort(404);
+});
+
 
 require __DIR__.'/auth.php';

@@ -19,6 +19,7 @@
         "vue": "^3.4.0"
     },
     "dependencies": {
+        "@lottiefiles/dotlottie-vue": "^0.5.6",
         "@vueuse/core": "^12.7.0",
         "boxicons": "^2.1.4"
     }

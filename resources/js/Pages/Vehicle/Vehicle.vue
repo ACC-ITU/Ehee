@@ -1,11 +1,11 @@
 <script setup>
-import DomainCard from "@/Pages/Vehicle/Partials/DomainCard.vue";
 import OwnerCard from "@/Pages/Vehicle/Partials/OwnerCard.vue";
 import TabBar from "@/Components/TabBar.vue";
-import RegistryCard from "@/Pages/Vehicle/Partials/RegistryCard.vue";
 import {computed} from "vue";
 import EheeLayout from "@/Layouts/EheeLayout.vue";
-import VehicleCard from "@/Pages/Vehicle/Partials/VehicleCard.vue";
+import DomainTab from "@/Pages/Vehicle/Partials/DomainTab.vue";
+import VehicleTab from "@/Pages/Vehicle/Partials/VehicleTab.vue";
+import RegistryTab from "@/Pages/Vehicle/Partials/RegistryTab.vue";
 
 const props = defineProps({
     registries: Array,
@@ -38,7 +38,7 @@ const vehicles = computed(() => {
 
 const ownerParam = route().params['owner'];
 const currentOwner = computed(() => {
-    return props.registries[0].owners.find(owner => owner.ownerDetails.identifier === ownerParam)
+    return props.registries[0].owners.find(owner => owner.ownerDetails.identifier.toLowerCase() === ownerParam.toLowerCase())
 })
 </script>
 
@@ -47,43 +47,26 @@ const currentOwner = computed(() => {
     <EheeLayout>
         <div class="min-h-screen bg-gray-50 py-8">
             <div class="max-w-7xl mx-auto px-4">
+
                 <!-- Owner Profile -->
-                <OwnerCard :owner="currentOwner.ownerDetails" class="mb-8"/>
+                <OwnerCard :owner="currentOwner?.ownerDetails" class="mb-8"/>
 
                 <!-- Tab System -->
                 <TabBar :tabs="tabs">
+
                     <!-- Vehicles Tab -->
                     <template #vehicles>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <VehicleCard
-                                v-for="vehicle in vehicles"
-                                :key="vehicle.id"
-                                :vehicle="vehicle"
-                            />
-                        </div>
+                        <VehicleTab :vehicles="vehicles" />
                     </template>
 
                     <!-- Domains Tab -->
                     <template #domains>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <DomainCard
-                                v-for="domain in domains"
-                                :key="domain.number"
-                                :domain="domain"
-                            />
-                        </div>
+                        <DomainTab :domains="domains"/>
                     </template>
 
                     <!-- Registries Tab -->
                     <template #registries>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <RegistryCard
-                                v-for="vehicle in registries"
-                                :key="vehicle.id"
-                                :registry="vehicle"
-                                :owner="currentOwner"
-                            />
-                        </div>
+                        <RegistryTab :registries="registries" :currentOwner="currentOwner" />
                     </template>
 
                 </TabBar>
