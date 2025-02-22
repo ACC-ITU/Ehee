@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\DomainSearchRequest;
 use Chumputy\Ulhandhu\Facades\Ulhandhu;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Throwable;
 
@@ -30,13 +32,18 @@ class DomainController extends Controller
                     ->get();
             });
 
-
-            if (empty($registries)) {
+            if (empty($registries->items)) {
                 return back()->withErrors('There are no registered vehicles or domains for this owner.');
             }
 
+            $currentOwner = Arr::first($registries->items[0]->owners, function ($owner) use ($request) {
+                return Str::lower($owner->ownerDetails->identifier) === Str::lower($request->get('owner'));
+            });
+
+
             return Inertia::render('Vehicle/Vehicle', [
                 'registries' => $registries->items,
+                'currentOwner' => $currentOwner,
             ]);
 
         } catch (Throwable $th) {

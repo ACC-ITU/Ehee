@@ -9,6 +9,7 @@ import RegistryTab from "@/Pages/Vehicle/Partials/RegistryTab.vue";
 
 const props = defineProps({
     registries: Array,
+    currentOwner: Object,
 });
 
 const tabs = [
@@ -35,11 +36,6 @@ const vehicles = computed(() => {
     })
     return vehicles;
 });
-
-const ownerParam = route().params['owner'];
-const currentOwner = computed(() => {
-    return props.registries[0].owners.find(owner => owner.ownerDetails.identifier.toLowerCase() === ownerParam.toLowerCase())
-})
 </script>
 
 
@@ -49,7 +45,7 @@ const currentOwner = computed(() => {
             <div class="max-w-7xl mx-auto px-4">
 
                 <!-- Owner Profile -->
-                <OwnerCard :owner="currentOwner?.ownerDetails" class="mb-8"/>
+                <OwnerCard :owner="currentOwner.ownerDetails" class="mb-8" v-if="currentOwner"/>
 
                 <!-- Tab System -->
                 <TabBar :tabs="tabs">
