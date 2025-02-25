@@ -23,7 +23,7 @@ const handleLogout = () => {
         <!-- Hamburger button -->
         <button
             @click="isOpen = !isOpen"
-            class="fixed top-4 left-4 p-2 rounded-lg hover:bg-gray-100 transition-colors z-50 "
+            class="fixed top-3 left-4 p-2 rounded-lg hover:bg-gray-100 transition-colors z-50 "
         >
             <svg
                 class="w-6 h-6"

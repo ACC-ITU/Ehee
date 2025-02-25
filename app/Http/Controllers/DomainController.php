@@ -23,6 +23,7 @@ class DomainController extends Controller
     {
         try {
             $owner = $request->get('owner');
+            $this->logDomainSearch($owner);
 
             $registries = Cache::remember('registries' . $owner, 60, function () use ($owner) {
                 return Ulhandhu::vehicle()
@@ -50,5 +51,10 @@ class DomainController extends Controller
             Log::error($th);
             return back()->withErrors($th->getMessage());
         }
+    }
+
+    protected function logDomainSearch(string $owner): void {
+        $user = auth()->user();
+        Log::info("Domain Search: User: $user->email (ID: $user->id) initiated a vehicle search by owner $owner");
     }
 }
