@@ -13,11 +13,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'support@acc.gov.mv',
-            'password' => bcrypt('pa$$w0rd'),
-            'is_admin' => true,
-        ]);
+
     }
 }

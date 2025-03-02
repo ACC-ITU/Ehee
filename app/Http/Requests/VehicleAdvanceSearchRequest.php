@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class DomainSearchRequest extends FormRequest
+class VehicleAdvanceSearchRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -23,7 +23,9 @@ class DomainSearchRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'owner' => ['required', 'string'],
+            'owner' => ['nullable', 'string'],
+            'registration_date' => ['nullable', 'date'],
+            'registration_number' => ['nullable', 'string'],
         ];
     }
 }

@@ -4,6 +4,7 @@ import {router} from "@inertiajs/vue3";
 import Select from "@/Components/Select.vue";
 import {DotLottieVue} from '@lottiefiles/dotlottie-vue'
 import EheeLayout from "@/Layouts/EheeLayout.vue";
+import AdvanceSearch from "@/Pages/Vehicle/Partials/AdvanceSearch.vue";
 
 const props = defineProps({
     errors: Object,
@@ -35,8 +36,10 @@ const handleSearch = async () => {
         onError: (err) => console.log(err),
         onFinish: () => isSearching.value = false,
     });
-
 }
+
+const advanceSearch = ref(false);
+
 </script>
 
 <template>
@@ -62,8 +65,8 @@ const handleSearch = async () => {
             </div>
 
             <form @submit.prevent="handleSearch">
-                <div class="flex flex-col items-center mt-10 p-4 transition-all">
-                    <div class="flex space-x-5 w-full max-w-2xl transition-all duration-300">
+                <div class="flex flex-col items-center mt-10 p-4 ">
+                    <div class="flex space-x-5 w-full max-w-2xl">
                         <div class="w-48">
                         <Select
                             v-model="filter"
@@ -92,7 +95,14 @@ const handleSearch = async () => {
                     <p class="text-red-600 text-sm mt-10" v-for="key in Object.keys(errors)">{{ errors[key] }}</p>
                 </div>
             </form>
+            <button type="button" class="flex items-center justify-center rounded-lg bg-white px-3 w-10 mx-auto h-10
+                        focus:ring-1 focus:ring-green-200 border hover:border-gray-300 text-gray-500 hover:text-gray-400"
+                    @click="advanceSearch=true"
+                    :disabled=isSearching>
+                <i class='bx bx-expand-horizontal'></i>
+            </button>
         </div>
 
+        <AdvanceSearch v-model="advanceSearch" v-if="advanceSearch"/>
     </EheeLayout>
 </template>

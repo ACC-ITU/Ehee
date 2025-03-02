@@ -1,6 +1,7 @@
 <script setup>
 import OwnershipDrawer from "@/Pages/Vehicle/Partials/OwnershipDrawer.vue";
 import {ref} from "vue";
+import VehiclePopup from "@/Pages/Vehicle/Partials/VehiclePopup.vue";
 
 const props = defineProps({
     registry: {
@@ -44,10 +45,16 @@ function isTheOwner() {
     const owner = props.registry.owners.find(owner => props.searchedOwner.owner_id === owner.owner_id);
     return owner.status
 }
+
+const isPopupOpen = ref(false);
+const selectedVehicle = ref(null)
+function openVehiclePopup(vehicle) {
+    isPopupOpen.value = true;
+    selectedVehicle.value = vehicle;
+}
 </script>
 
 <template>
-
     <div class="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
         <div class="flex items-center justify-between mb-4">
             <h3 class="text-xl font-semibold text-green-600">{{ registry.registration_no }}</h3>
@@ -58,7 +65,7 @@ function isTheOwner() {
                 >
                 {{ registry.active ? 'Active' : 'InActive' }}
               </span>
-                <span
+                <span v-if="searchedOwner"
                     class="px-3 py-1 rounded-full text-sm"
                     :class="isTheOwner() ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'"
                 >
@@ -103,10 +110,11 @@ function isTheOwner() {
             </div>
             <div class="flex space-x-5 items-center text-gray-600">
                 <span class="text-sm">Vehicle</span>
-                <span class="font-medium">{{ registry.vehicle?.description }}</span>
+                <span class="font-medium cursor-pointer" @click="openVehiclePopup(registry.vehicle)">{{ registry.vehicle?.description }}</span>
             </div>
         </div>
     </div>
 
     <OwnershipDrawer v-model="isDrawerOpen"  v-if="isDrawerOpen" :owners="registry.owners"/>
+    <VehiclePopup v-model="isPopupOpen" :vehicle="selectedVehicle" />
 </template>

@@ -69,6 +69,26 @@ function formatDate(dateString) {
                 <span class="text-sm">Model</span>
                 <span class="font-medium">{{vehicle.model}}</span>
             </div>
+
+            <div class="flex space-x-5 items-center text-gray-600">
+                <span class="text-sm">Engine No</span>
+                <span class="font-medium">{{vehicle.engine_no}}</span>
+            </div>
+
+            <div class="flex space-x-5 items-center text-gray-600">
+                <span class="text-sm">Chassis No</span>
+                <span class="font-medium">{{vehicle.chassis_no}}</span>
+            </div>
+
+            <div class="flex space-x-5 items-center text-gray-600">
+                <span class="text-sm">Model Number</span>
+                <span class="font-medium">{{vehicle.model_no}}</span>
+            </div>
+
+            <div class="flex space-x-5 items-center text-gray-600">
+                <span class="text-sm">Tonnage</span>
+                <span class="font-medium">{{vehicle.tonnage}}</span>
+            </div>
         </div>
     </div>
 </template>

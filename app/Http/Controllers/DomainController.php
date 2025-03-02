@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\DomainSearchRequest;
+use App\Http\Requests\VehicleAdvanceSearchRequest;
 use Chumputy\Ulhandhu\Facades\Ulhandhu;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Cache;
@@ -53,8 +54,39 @@ class DomainController extends Controller
         }
     }
 
-    protected function logDomainSearch(string $owner): void {
+    protected function logDomainSearch(string $owner): void
+    {
         $user = auth()->user();
         Log::info("Domain Search: User: $user->email (ID: $user->id) initiated a vehicle search by owner $owner");
+    }
+
+    public function advanceSearch(VehicleAdvanceSearchRequest $request)
+    {
+        $filters = $request->validated();
+        $query = Ulhandhu::vehicle()
+            ->with(['owners', 'domain', 'information']);
+
+        if ($filters['owner']) {
+            $query->whereOwner($filters['owner']);
+        }
+        if ($filters['registration_date']) {
+            $query->whereRegistrationAt($filters['registration_date']);
+        }
+
+        if ($filters['registration_number']) {
+            $query->whereRegistrationNumber($filters['registration_number']);
+        }
+
+        try {
+            $registries = $query->get();
+
+            return Inertia::render('Vehicle/Vehicle', [
+                'registries' => $registries->items,
+            ]);
+        } catch (Throwable $th) {
+            Log::error($th);
+            return back()->withErrors($th->getMessage());
+        }
+
     }
 }
