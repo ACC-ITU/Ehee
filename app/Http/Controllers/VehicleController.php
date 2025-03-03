@@ -35,11 +35,6 @@ class VehicleController extends Controller
         }
     }
 
-    protected function logDomainSearch(string $owner): void
-    {
-        $user = auth()->user();
-        Log::info("Domain Search: User: $user->email (ID: $user->id) initiated a vehicle search by owner $owner");
-    }
 
     public function advanceSearch(VehicleAdvanceSearchRequest $request)
     {
