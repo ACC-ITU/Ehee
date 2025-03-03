@@ -1,12 +1,15 @@
 <script setup>
 import {computed} from "vue";
 import {useForm} from "@inertiajs/vue3";
+import Select from "@/Components/Select.vue";
 
 const props = defineProps({
     modelValue: {
         type: Boolean,
         required: true,
-    }
+    },
+    islands: Array,
+    atolls: Array,
 })
 const emit = defineEmits(["update:modelValue"]);
 
@@ -24,10 +27,26 @@ const form = useForm({
     owner: '',
     registration_date: null,
     registration_number: '',
+    atoll: '',
+    island: ''
+})
+
+
+const filteredIslands = computed(() => {
+    let filtered = props.islands;
+    if (form.atoll) {
+        filtered = props.islands.filter(island => form.atoll === island.atoll.name)
+            .filter((value, index, self) => self.findIndex(island => island.id === value.id) === index)
+    }
+    return filtered.sort((a, b) => a.id - b.id);
 })
 
 function handleSearch() {
     form.get(route('vehicles.search'));
+}
+
+function resetFilters() {
+    form.reset()
 }
 </script>
 
@@ -60,9 +79,9 @@ function handleSearch() {
         >
             <div
                 v-if="visible"
-                class="fixed top-0 right-0 h-full w-full md:w-1/2 xl:w-1/3 bg-gray-100 shadow-lg z-50 flex flex-col items-center "
+                class="fixed top-0 right-0 h-full w-full md:w-1/2 xl:w-1/3 bg-gray-100 shadow-lg z-50 flex flex-col items-center overflow-y-auto"
             >
-                <!-- Main buttons container -->
+                <!-- Main Container -->
                 <div class="w-full mt-10 px-5 flex flex-col items-start gap-4">
                     <div class="flex justify-between items-center w-full">
                         <h1 class="font-medium text-2xl ">Advance Search</h1>
@@ -116,7 +135,37 @@ function handleSearch() {
                             </div>
                         </div>
 
-                        <button class="text-green-100 bg-green-800 hover:bg-green-700 px-5 py-2 rounded-lg mt-10">Submit</button>
+                        <!-- Atoll -->
+                        <div class="flex flex-col w-full items-start justify-between space-y-1 mt-5">
+                            <div class="flex flex-col items-start justify-start gap-2">
+                                <label for="registration_date" class="w-64 text-nowrap font-semibold text-gray-700">Atoll</label>
+                                <Select v-model="form.atoll" :options="atolls" optionLabel="name" optionValue="name"
+                                        placeholder="Atoll"/>
+                            </div>
+                        </div>
+
+                        <!-- Island -->
+                        <div class="flex flex-col w-full items-start justify-between space-y-1 mt-5">
+                            <div class="flex flex-col items-start justify-start gap-2">
+                                <label for="registration_date" class="w-64 text-nowrap font-semibold text-gray-700">Island</label>
+                                <Select v-model="form.island" :options="filteredIslands" optionLabel="name"
+                                        optionValue="name" placeholder="Island"/>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="flex justify-start items-center space-x-10">
+                            <button type="button"
+                                    @click="resetFilters"
+                                    class="text-gray-800 bg-gray-400 hover:bg-gray-500 px-5 py-2 rounded-lg mt-10">
+                                <i class="bx bx-reset"/>
+                            </button>
+                            <button type="submit"
+
+                                    class="text-green-100 bg-green-800 hover:bg-green-700 px-5 py-2 rounded-lg mt-10">
+                                Submit
+                            </button>
+                        </div>
                     </form>
 
                 </div>

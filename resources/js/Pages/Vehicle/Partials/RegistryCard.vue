@@ -2,6 +2,7 @@
 import OwnershipDrawer from "@/Pages/Vehicle/Partials/OwnershipDrawer.vue";
 import {ref} from "vue";
 import VehiclePopup from "@/Pages/Vehicle/Partials/VehiclePopup.vue";
+import {lowerCase, startCase} from "lodash";
 
 const props = defineProps({
     registry: {
@@ -51,6 +52,7 @@ const selectedVehicle = ref(null)
 function openVehiclePopup(vehicle) {
     isPopupOpen.value = true;
     selectedVehicle.value = vehicle;
+    selectedVehicle.value['registration_no'] = props.registry.registration_no;
 }
 </script>
 
@@ -102,15 +104,21 @@ function openVehiclePopup(vehicle) {
                 <span class="font-medium flex space-x-2  text-xs"
                     :class="owner.status ? 'text-green-400' : 'text-red-300'"
                     v-for="owner in registry.owners" :key="owner.owner_id">
-                {{ owner.ownerDetails.full_name }}
+                {{ startCase(lowerCase(owner.ownerDetails.full_name)) }}
                 </span>
                 <button @click="openOwnersDrawer()">
                     <i class='bx bx-expand' />
                 </button>
             </div>
             <div class="flex space-x-5 items-center text-gray-600">
+                <span class="text-sm">Island:</span>
+                <span
+                    class="font-medium">{{ registry.island.name}}</span>
+            </div>
+            <div class="flex space-x-5 items-center text-gray-600">
                 <span class="text-sm">Vehicle</span>
-                <span class="font-medium cursor-pointer" @click="openVehiclePopup(registry.vehicle)">{{ registry.vehicle?.description }}</span>
+                <span class="font-medium"> {{ registry.vehicle?.description }}</span>
+                <span class="cursor-pointer" @click="openVehiclePopup(registry.vehicle)"><i class="bx bx-expand" /> </span>
             </div>
         </div>
     </div>

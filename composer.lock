@@ -141,7 +141,7 @@
             "dist": {
                 "type": "path",
                 "url": "../ulhandhu-php",
-                "reference": "e9ed1b6b42392c9e071a313ed3c34aa63b215954"
+                "reference": "833d0f197039873f26da1a241ea49ca151278c50"
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.9",

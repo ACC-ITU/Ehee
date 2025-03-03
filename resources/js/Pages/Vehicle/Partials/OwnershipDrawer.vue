@@ -1,5 +1,6 @@
 <script setup>
-import {defineProps, defineEmits, ref, watch, computed} from 'vue';
+import {ref, watch, computed} from 'vue';
+import {lowerCase, startCase} from "lodash";
 
 const props = defineProps({
     modelValue: Boolean,
@@ -74,7 +75,7 @@ function formatDate(dateString) {
                                 </svg>
                             </div>
                             <div>
-                                <h4 class="text-lg font-medium text-gray-900">{{ currentOwner.ownerDetails.full_name }} ({{currentOwner.ownerDetails.identifier}})</h4>
+                                <h4 class="text-lg font-medium text-gray-900">{{ startCase(lowerCase(currentOwner.ownerDetails.full_name)) }} ({{startCase(currentOwner.ownerDetails.identifier)}})</h4>
                                 <p class="text-sm text-gray-600">Owner since: {{ formatDate(currentOwner.issued_at) }}</p>
                             </div>
                         </div>
@@ -97,7 +98,7 @@ function formatDate(dateString) {
                                     </svg>
                                 </div>
                                 <div>
-                                    <h4 class="text-lg font-medium text-gray-900">{{ owner.ownerDetails.full_name }} ({{owner.ownerDetails.identifier}})</h4>
+                                    <h4 class="text-lg font-medium text-gray-900">{{ startCase(lowerCase(owner.ownerDetails.full_name)) }} ({{startCase(owner.ownerDetails.identifier)}})</h4>
                                     <p class="text-sm text-gray-600">
                                         Owned: {{ formatDate(owner.issued_at) }} - {{ formatDate(owner.expired_at) }}
                                     </p>
