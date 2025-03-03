@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "748911bab9556a4136c89b5d20db3af6",
+    "content-hash": "70c1c2750dd8d00b8669abc566c84420",
     "packages": [
         {
             "name": "brick/math",
@@ -138,10 +138,16 @@
         {
             "name": "chumputy/ulhandhu-php",
             "version": "dev-main",
-            "dist": {
-                "type": "path",
-                "url": "../ulhandhu-php",
+            "source": {
+                "type": "git",
+                "url": "git@github.com:chumputys/ulhandhu-php.git",
                 "reference": "833d0f197039873f26da1a241ea49ca151278c50"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/chumputys/ulhandhu-php/zipball/833d0f197039873f26da1a241ea49ca151278c50",
+                "reference": "833d0f197039873f26da1a241ea49ca151278c50",
+                "shasum": ""
             },
             "require": {
                 "guzzlehttp/guzzle": "^7.9",
@@ -159,6 +165,7 @@
                 "pestphp/pest": "^2.36",
                 "phpstan/phpstan": "^2.1"
             },
+            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -190,9 +197,11 @@
                 }
             ],
             "description": "A Laravel package for interacting with third Transport API",
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "source": "https://github.com/chumputys/ulhandhu-php/tree/main",
+                "issues": "https://github.com/chumputys/ulhandhu-php/issues"
+            },
+            "time": "2025-03-03T09:42:10+00:00"
         },
         {
             "name": "dflydev/dot-access-data",
