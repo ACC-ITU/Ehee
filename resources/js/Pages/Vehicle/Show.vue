@@ -38,6 +38,10 @@ const formatDate = (dateString) => {
 const formatName = (name) => {
     return startCase(lowerCase(name));
 }
+
+function printPage() {
+    window.print()
+}
 </script>
 
 <template>
@@ -52,7 +56,8 @@ const formatName = (name) => {
                 </div>
                 <div class="flex gap-2">
                     <button
-                        class="inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                        @click="printPage"
+                        class="print-button inline-flex items-center justify-center rounded-md bg-white px-3 py-2 text-sm font-medium text-gray-700 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
                         <PrinterIcon class="mr-2 h-4 w-4"/>
                         Print
                     </button>
@@ -97,7 +102,7 @@ const formatName = (name) => {
                         <TruckIcon v-else-if="registry.vehicle.description === 'VAN'"
                                    class="h-12 w-12 stroke-1 text-gray-700" style="transform: scale(0.85);"/>
                         <TractorIcon v-else-if="registry.vehicle.description === 'DUMPER'"
-                                 class="h-12 w-12 stroke-1 text-gray-700"/>
+                                     class="h-12 w-12 stroke-1 text-gray-700"/>
                         <CarIcon v-else class="h-12 w-12 stroke-1 text-gray-700"/>
                     </div>
                     <div class="ml-4">
@@ -150,7 +155,7 @@ const formatName = (name) => {
                 </div>
 
                 <!-- Vehicle Information -->
-                <div class="col-span-1 lg:col-span-2 rounded-lg border bg-white p-6 shadow-sm">
+                <div class="col-span-1 lg:col-span-2 rounded-lg border bg-white p-6 shadow-sm page-break-after">
                     <h2 class="mb-4 text-lg font-semibold text-gray-900">Vehicle Information</h2>
                     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
                         <div class="flex justify-between border-b border-gray-100 pb-2">
@@ -201,33 +206,13 @@ const formatName = (name) => {
                 </div>
 
                 <!-- Owner Information -->
-                <div class="col-span-1 lg:col-span-3 rounded-lg border bg-white p-6 shadow-sm">
+                <div class="col-span-1 lg:col-span-3 rounded-lg border bg-white p-6 shadow-sm mt-5 page-break-after">
                     <div class="mb-4 flex items-center justify-between">
                         <h2 class="text-lg font-semibold text-gray-900">Owner Information</h2>
-                        <div class="flex space-x-2">
-                            <button
-                                @click="ownerView = 'current'"
-                                :class="[
-                                  'px-3 py-1 text-sm font-medium rounded-md',
-                                  ownerView === 'current' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                ]"
-                            >
-                                Current Owner
-                            </button>
-                            <button
-                                @click="ownerView = 'history'"
-                                :class="[
-                                  'px-3 py-1 text-sm font-medium rounded-md',
-                                  ownerView === 'history' ? 'bg-primary text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
-                                ]"
-                            >
-                                Ownership History ({{ previousOwners.length }})
-                            </button>
-                        </div>
                     </div>
 
                     <!-- Current Owner -->
-                    <div v-if="ownerView === 'current'">
+                    <div>
                         <div v-if="currentOwner" class="space-y-4">
                             <div class="flex items-center space-x-4">
                                 <div
@@ -270,63 +255,77 @@ const formatName = (name) => {
                             <h3 class="text-sm font-medium text-gray-900">No owners found</h3>
                             <p class="mt-1 text-sm text-gray-500">This vehicle registry doesn't have any owners</p>
                         </div>
+
+                        <!-- Owners History -->
+                        <div class="mt-5">
+                            <div class="mb-4 flex items-center justify-between">
+                                <h2 class="text-lg font-semibold text-gray-900">Owner History</h2>
+
+                            </div>
+                            <div class="overflow-hidden rounded-md border" v-if="previousOwners.length > 0">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Name
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            ID
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Contact
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Island/Atoll
+                                        </th>
+                                        <th scope="col"
+                                            class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
+                                            Period
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-200 bg-white">
+                                    <tr v-for="(owner) in previousOwners" :key="owner.id">
+                                        <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                                            {{ formatName(owner.ownerDetails.full_name) }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {{ formatName(owner.ownerDetails.identifier) }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {{ owner.ownerDetails.phone_no }} / {{ owner.ownerDetails.mobile_no }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {{ owner.ownerDetails.island?.atoll?.name }}. {{
+                                                owner.ownerDetails.island?.name
+                                            }}
+                                        </td>
+                                        <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                            {{ formatDate(owner.issued_at) }}
+                                            - {{ formatDate(owner.expired_at) }}
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div v-else
+                                 class="flex flex-col items-center justify-center rounded-md border border-dashed border-gray-300 p-8 text-center">
+                                <UserIcon class="mb-2 h-10 w-10 text-gray-400"/>
+                                <h3 class="text-sm font-medium text-gray-900">No previous owners found</h3>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Ownership History -->
-                    <div v-if="ownerView === 'history'" class="overflow-hidden rounded-md border">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <thead class="bg-gray-50">
-                            <tr>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Name
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    ID
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Contact
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Island/Atoll
-                                </th>
-                                <th scope="col"
-                                    class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500">
-                                    Period
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody class="divide-y divide-gray-200 bg-white">
-                            <tr v-for="(owner) in previousOwners" :key="owner.id">
-                                <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                                    {{ formatName(owner.ownerDetails.full_name) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                    {{ formatName(owner.ownerDetails.identifier) }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                    {{ owner.ownerDetails.phone_no }} / {{ owner.ownerDetails.mobile_no }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                    {{ owner.ownerDetails.island?.atoll?.name }}. {{
-                                        owner.ownerDetails.island?.name
-                                    }}
-                                </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                    {{ formatDate(owner.issued_at) }}
-                                    - {{ formatDate(owner.expired_at) }}
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+
                 </div>
 
                 <!-- Domain Information -->
-                <div class="col-span-1 lg:col-span-3 rounded-lg border bg-white p-6 shadow-sm">
+                <div class="col-span-1 lg:col-span-3 rounded-lg border bg-white p-6 shadow-sm mt-5">
                     <h2 class="mb-4 text-lg font-semibold text-gray-900">Domain Information</h2>
                     <div v-if="registry.domains.length > 0" class="overflow-hidden rounded-md border">
                         <table class="min-w-full divide-y divide-gray-200">
@@ -399,6 +398,22 @@ const formatName = (name) => {
 </template>
 
 <style>
+@media print {
+    .print-button {
+        display: none; /* Hide the print button when printing */
+    }
+
+    /* Insert a page break before a section */
+    .page-break-before {
+        page-break-before: always;
+    }
+
+    /* Insert a page break after a section */
+    .page-break-after {
+        page-break-after: always;
+    }
+}
+
 :root {
     --primary: #07d129;
     --primary-foreground: #ffffff;
