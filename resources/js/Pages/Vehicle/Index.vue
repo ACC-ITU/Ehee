@@ -213,7 +213,7 @@ const formatDate = (dateString) => {
                                     id="domain"
                                     v-model="form.domain"
                                     class="block w-full rounded-md border-gray-300 pl-10 focus:border-primary focus:ring-primary sm:text-sm"
-                                    placeholder="e.g. DOM-2023-001"
+                                    placeholder="e.g. 8008"
                                 />
                             </div>
                         </div>
