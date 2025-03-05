@@ -36,13 +36,6 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
         });
-
-        User::factory()->create([
-            'name' => 'Super Admin',
-            'email' => 'support@acc.gov.mv',
-            'password' => bcrypt('pa$$w0rd'),
-            'is_admin' => true,
-        ]);
     }
 
     /**

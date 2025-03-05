@@ -141,12 +141,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:chumputys/ulhandhu-php.git",
-                "reference": "833d0f197039873f26da1a241ea49ca151278c50"
+                "reference": "9b3fea4a77a8a8c16cf762025b9bece013eac38b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/chumputys/ulhandhu-php/zipball/833d0f197039873f26da1a241ea49ca151278c50",
-                "reference": "833d0f197039873f26da1a241ea49ca151278c50",
+                "url": "https://api.github.com/repos/chumputys/ulhandhu-php/zipball/9b3fea4a77a8a8c16cf762025b9bece013eac38b",
+                "reference": "9b3fea4a77a8a8c16cf762025b9bece013eac38b",
                 "shasum": ""
             },
             "require": {
@@ -201,7 +201,7 @@
                 "source": "https://github.com/chumputys/ulhandhu-php/tree/main",
                 "issues": "https://github.com/chumputys/ulhandhu-php/issues"
             },
-            "time": "2025-03-03T09:42:10+00:00"
+            "time": "2025-03-05T05:56:25+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

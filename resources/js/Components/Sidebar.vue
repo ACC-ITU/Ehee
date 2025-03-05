@@ -6,9 +6,9 @@ const isOpen = ref(false)
 
 // Main buttons configuration
 const mainButtons = [
-    {icon: "bx bxs-car", action: () => router.visit(route('domains.index'))},
-    {icon: "bx bx-credit-card-alt", action: () => router.visit(route('domains.index'))},
-    {icon: "bx bx-water", action: () => router.visit(route('domains.index'))},
+    {icon: "bx bxs-car", action: () => router.visit(route('vehicles.search'))},
+    // {icon: "bx bx-credit-card-alt", action: () => router.visit(route('vehicles.search'))},
+    // {icon: "bx bx-water", action: () => router.visit(route('vehicles.search'))},
 ]
 
 // Logout handler

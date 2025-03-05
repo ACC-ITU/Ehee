@@ -10,15 +10,15 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+//    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    Route::get('domains', [VehicleController::class, 'index'])
-        ->name('domains.index');
-
-    Route::get('vehicles', [VehicleController::class, 'advanceSearch'])
+    Route::get('vehicles', [VehicleController::class, 'search'])
         ->name('vehicles.search');
+
+    Route::get('vehicles/{registrationNumber}', [VehicleController::class, 'show'])
+        ->name('vehicles.show');
 });
 
 Route::get('/images/{filename}', function ($filename) {
@@ -30,5 +30,4 @@ Route::get('/images/{filename}', function ($filename) {
 
     abort(404);
 });
-
 require __DIR__.'/auth.php';

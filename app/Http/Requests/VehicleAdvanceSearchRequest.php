@@ -28,6 +28,9 @@ class VehicleAdvanceSearchRequest extends FormRequest
             'registration_number' => ['nullable', 'string'],
             'island' => ['nullable', 'string'],
             'atoll' => ['nullable', 'string'],
+            'domain' => ['nullable', 'integer'],
+            'status' => ['nullable', 'boolean'],
+            'page' => ['nullable', 'integer'],
         ];
     }
 }
