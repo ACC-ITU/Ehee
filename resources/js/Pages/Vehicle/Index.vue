@@ -1,5 +1,5 @@
 <script setup>
-import {ref, computed, onMounted} from 'vue';
+import {ref, computed} from 'vue';
 import {Link, router, useForm} from "@inertiajs/vue3";
 import {
     SearchIcon,
@@ -55,7 +55,7 @@ const form = useForm({
     registration_number: '',
     owner: '',
     registration_date: '',
-    registration_date_to: '',
+    registration_date_operator: '=',
     atoll: '',
     island: '',
     domain: '',
@@ -71,7 +71,7 @@ const applyFilters = (page) => {
     router.get(route('vehicles.search'), cleanedData, {
         preserveState: true,
         onError: (error) => console.log(error),
-        onSuccess: (data) => console.log(),
+        onSuccess: (data) => console.log(data),
 
     });
 };
@@ -233,19 +233,23 @@ const formatDate = (dateString) => {
                                         class="block w-full rounded-md border-gray-300 pl-10 focus:border-primary focus:ring-primary sm:text-sm"
                                     />
                                 </div>
-                                <!--                                <div class="flex items-center justify-center">-->
-                                <!--                                    <span class="text-sm text-gray-500">to</span>-->
-                                <!--                                </div>-->
-                                <!--                                <div class="relative flex-1 rounded-md shadow-sm">-->
-                                <!--                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">-->
-                                <!--                                        <CalendarIcon class="h-4 w-4 text-gray-400"/>-->
-                                <!--                                    </div>-->
-                                <!--                                    <input-->
-                                <!--                                        type="date"-->
-                                <!--                                        v-model="form.registration_date_to"-->
-                                <!--                                        class="block w-full rounded-md border-gray-300 pl-10 focus:border-primary focus:ring-primary sm:text-sm"-->
-                                <!--                                    />-->
-                                <!--                                </div>-->
+                                <div class="flex items-center justify-center">
+                                    <span class="text-sm text-gray-500">Operator</span>
+                                </div>
+                                <div class="relative flex-1 rounded-md shadow-sm w-full lg:w-64">
+                                    <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
+                                        <CalendarIcon class="h-4 w-4 text-gray-400"/>
+                                    </div>
+                                    <select
+                                        id="operator"
+                                        v-model="form.registration_date_operator"
+                                        class="block w-full lg:w-64 rounded-md border-gray-300 pl-10 focus:border-primary focus:ring-primary sm:text-sm"
+                                    >
+                                        <option value="=">Equal</option>
+                                        <option value="<"> Grater Than </option>
+                                        <option value=">">Less Than</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
 

@@ -42,7 +42,11 @@ class VehicleService
                 $query->whereOwner($filters['owner']);
             }
             if (isset($filters['registration_date']) && $filters['registration_date']) {
-                $query->whereRegistrationAt($filters['registration_date']);
+                if (isset($filters['registration_date_operator']) && $filters['registration_date_operator']) {
+                    $query->whereRegistrationAt($filters['registration_date'], $filters['registration_date_operator']);
+                } else {
+                    $query->whereRegistrationAt($filters['registration_date']);
+                }
             }
 
             if (isset($filters['registration_number']) && $filters['registration_number']) {

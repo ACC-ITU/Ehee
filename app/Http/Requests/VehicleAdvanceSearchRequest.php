@@ -25,6 +25,7 @@ class VehicleAdvanceSearchRequest extends FormRequest
         return [
             'owner' => ['nullable', 'string'],
             'registration_date' => ['nullable', 'date'],
+            'registration_date_operator' => ['nullable', 'string', 'in:=,>,<'],
             'registration_number' => ['nullable', 'string'],
             'island' => ['nullable', 'string'],
             'atoll' => ['nullable', 'string'],
