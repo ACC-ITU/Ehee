@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 class VehicleService
 {
 
-    public function find(string $registrationNumber)
+    public function find(string $registrationNumber): PaginatedResponse
     {
         return Cache::remember("vehicle_find_$registrationNumber", now()->addMinutes(20), function () use ($registrationNumber) {
             return Ulhandhu::vehicle()

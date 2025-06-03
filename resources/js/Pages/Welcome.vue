@@ -18,7 +18,7 @@ import {DotLottieVue} from '@lottiefiles/dotlottie-vue'
                 Anti-Corruption Commission</p>
             <p class="text-md text-gray-500 max-w-lg mb-6">Ehee helps investigators analyze vehicle registrations,
                 ownership history, and associated domains efficiently and accurately.</p>
-            <Link :href="route('vehicles.search')"
+            <Link :href="route('vehicles.index')"
                   class="px-6 py-3 bg-green-700 text-white font-semibold rounded-lg shadow-md hover:bg-green-700 transition">
                 Start Search
             </Link>

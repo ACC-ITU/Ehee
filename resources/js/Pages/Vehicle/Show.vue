@@ -1,11 +1,8 @@
 <script setup>
-import {computed, onMounted, ref} from 'vue';
+import {computed, ref} from 'vue';
 import {
     UserIcon,
     PrinterIcon,
-    PencilIcon,
-    EyeIcon,
-    FileTextIcon,
     DatabaseIcon,
     CarIcon,
     TruckIcon,
@@ -425,13 +422,5 @@ function printPage() {
 
 .text-primary {
     color: var(--primary);
-}
-
-.bg-primary\/90 {
-    background-color: rgba(9, 172, 0, 0.9);
-}
-
-.hover\:bg-primary\/90:hover {
-    background-color: rgba(8, 221, 11, 0.9);
 }
 </style>
