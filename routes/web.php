@@ -3,8 +3,10 @@
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\LogAnalyticsController;
 use App\Http\Controllers\VehicleController;
+use App\Http\Middleware\CheckAdminUser;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use LdapRecord\Models\ActiveDirectory\User;
 
 Route::get('/', function () {
     return Inertia::render('Welcome');
@@ -22,14 +24,13 @@ Route::middleware('auth')->group(function () {
         ->name('vehicles.show');
 });
 
-Route::middleware(['auth'])->prefix('admin')->group(function () {
+Route::middleware(['auth', CheckAdminUser::class])->prefix('admin')->group(function () {
     Route::get('/analytics', [LogAnalyticsController::class, 'index'])->name('analytics.index');
     Route::get('/analytics/export', [LogAnalyticsController::class, 'exportData'])->name('analytics.export');
 
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
     Route::get('/activity-logs/export', [ActivityLogController::class, 'export'])->name('activity-logs.export');
 });
-
 
 
 Route::get('/images/{filename}', function ($filename) {
@@ -41,4 +42,13 @@ Route::get('/images/{filename}', function ($filename) {
 
     abort(404);
 });
-require __DIR__.'/auth.php';
+
+when(app()->isLocal(), function () {
+    Route::get('/ldap', function () {
+        $user = User::where('name', '=', 'Ubaidulla Ali')->first();
+        $group = \LdapRecord\Models\ActiveDirectory\Group::where('cn', '=', 'Administrators')->first();;
+
+        dd($user->getAttributes());
+    });
+});
+require __DIR__ . '/auth.php';

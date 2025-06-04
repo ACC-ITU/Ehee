@@ -22,7 +22,6 @@ class VehicleService
 
     public function filterVehicles(array $filters): PaginatedResponse
     {
-        $this->logDomainSearch($filters);
         return $this->fetchVehicles($filters);
     }
 
@@ -77,16 +76,5 @@ class VehicleService
         });
 
 
-    }
-
-    protected function logDomainSearch(array $filters): void
-    {
-        $user = auth()->user();
-        Log::info("\n\n");
-        Log::info("Vehicle Search: Log Started ======================== ");
-        Log::info("Vehicle Search: User: $user->email (ID: $user->id) initiated a vehicle search ");
-        Log::info($filters);
-
-        Log::info("Vehicle Search: Log Ended  *************************\n\n");
     }
 }
