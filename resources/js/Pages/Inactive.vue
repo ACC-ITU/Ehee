@@ -18,9 +18,6 @@
                 Your user account is inactive or not authorized to use this application.
                 Please contact IT support to assist.
             </p>
-            <PrimaryButton>
-                Contact IT Support
-            </PrimaryButton>
 
             <!-- Contact Button -->
             <button class="w-full bg-gray-900 text-white py-3 px-4 rounded-md hover:bg-gray-800 transition-colors duration-200 font-medium">
@@ -32,5 +29,4 @@
 
 <script setup>
 // No logic needed for this static page
-import PrimaryButton from "@/Components/PrimaryButton.vue";
 </script>
