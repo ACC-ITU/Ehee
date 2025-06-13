@@ -1,13 +1,12 @@
 <?php
 
-
 test('image route returns file when it exists', function () {
     // Create a test image
     $filename = 'test-image.jpg';
-    $path = resource_path("images");
+    $path = resource_path('images');
 
     // Create directory if it doesn't exist
-    if (!file_exists($path)) {
+    if (! file_exists($path)) {
         mkdir($path, 0777, true);
     }
 

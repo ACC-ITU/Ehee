@@ -1,6 +1,5 @@
 <?php
 
-
 use App\Services\IslandService;
 use Chumputy\Ulhandhu\Facades\Ulhandhu;
 use Illuminate\Support\Facades\Cache;
@@ -9,18 +8,18 @@ test('it can get unique islands', function () {
     // Mock the Ulhandhu facade
     Ulhandhu::shouldReceive('island->with->get')
         ->once()
-        ->andReturn((object)[
+        ->andReturn((object) [
             'items' => [
-                (object)[
+                (object) [
                     'id' => 1,
                     'name' => 'MALE',
-                    'atoll' => (object)['id' => 1, 'code' => 'K']
-                ]
+                    'atoll' => (object) ['id' => 1, 'code' => 'K'],
+                ],
             ],
-            'lastPage' => 1
+            'lastPage' => 1,
         ]);
 
-    $islandService = new IslandService();
+    $islandService = new IslandService;
     $islands = $islandService->getIsland();
 
     expect($islands)->toBeArray()
@@ -37,6 +36,6 @@ test('it caches island data', function () {
         ->once()
         ->andReturn([/* mock data */]);
 
-    $islandService = new IslandService();
+    $islandService = new IslandService;
     $islandService->getIsland();
 });

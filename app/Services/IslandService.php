@@ -20,7 +20,7 @@ class IslandService
         return $this->getUniqueIslands();
     }
 
-    public function getAtolls()
+    public function getAtolls(): array
     {
         return $this->getUniqueAtolls();
     }
@@ -30,6 +30,7 @@ class IslandService
         $this->islands = Cache::remember('islands', now()->addDays(7), function () {
             $islandResponse = Ulhandhu::island()
                 ->with('atoll')
+                ->perPage(100)
                 ->get();
 
             $results = $islandResponse->items;

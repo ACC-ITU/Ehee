@@ -15,11 +15,9 @@ class VehicleController extends Controller
 {
     public function __construct(
         protected VehicleService $vehicleService,
-        protected IslandService  $islandService,
+        protected IslandService $islandService,
         protected LoggingService $loggingService
-    )
-    {
-    }
+    ) {}
 
     public function index(VehicleAdvanceSearchRequest $request)
     {
@@ -32,13 +30,11 @@ class VehicleController extends Controller
         });
 
         $registries = null;
-        if (!$allQueriesEmpty) {
-        $filters = $request->validated();
+        if (! $allQueriesEmpty) {
+            $filters = $request->validated();
             $registries = $this->vehicleService->filterVehicles($filters);
             $this->loggingService->logSearch($request, $registries->items);
         }
-
-
 
         return Inertia::render('Vehicle/Index', [
             'islands' => $islands,

@@ -1,14 +1,14 @@
 <script setup>
-import {router, useForm} from "@inertiajs/vue3";
+import {Link, useForm, usePage} from "@inertiajs/vue3";
 import {ref} from "vue";
 
 const isOpen = ref(false)
 
 // Main buttons configuration
 const mainButtons = [
-    {icon: "bx bxs-car", action: () => router.visit(route('vehicles.search'))},
-    // {icon: "bx bx-credit-card-alt", action: () => router.visit(route('vehicles.search'))},
-    // {icon: "bx bx-water", action: () => router.visit(route('vehicles.search'))},
+    {icon: "bx bxs-car", route: 'vehicles.index', admin: false},
+    {icon: "bx bx-user", route: 'users.index', admin: true},
+    {icon: "bx bx-bolt-circle", route: 'activity-logs.index', admin: true},
 ]
 
 // Logout handler
@@ -16,10 +16,12 @@ const handleLogout = () => {
     console.log('Logout clicked')
     useForm().post(route('logout'));
 }
+
+const user = usePage().props.auth.user;
 </script>
 
 <template>
-    <div >
+    <div>
         <!-- Hamburger button -->
         <button
             @click="isOpen = !isOpen"
@@ -71,14 +73,15 @@ const handleLogout = () => {
             >
                 <!-- Main buttons container -->
                 <div class="flex-1 w-full pt-16 flex flex-col items-center gap-4">
-                    <button
-                        v-for="(button, index) in mainButtons"
-                        :key="index"
-                        @click="button.action"
-                        class="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center text-gray-700 hover:text-gray-900"
-                    >
-                        <i :class="button.icon" class="text-xl" />
-                    </button>
+                    <template v-for="(item, index) in mainButtons" :key="index">
+                        <Link
+                            v-if="!item.admin || item.admin === user.is_admin"
+                            :href="route(item.route)"
+                            class="w-12 h-12 rounded-lg bg-gray-100 hover:bg-gray-200 transition-colors flex items-center justify-center text-gray-700 hover:text-gray-900"
+                        >
+                            <i :class="item.icon" class="text-xl"/>
+                        </Link>
+                    </template>
                 </div>
 
                 <!-- Logout button -->

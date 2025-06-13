@@ -317,6 +317,11 @@ import { ref, computed, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import LineChart from '@/Components/Charts/LineChart.vue';
 import BarChart from '@/Components/Charts/BarChart.vue';
+import EheeLayout from "@/Layouts/EheeLayout.vue";
+
+defineOptions({
+    layout: EheeLayout,
+})
 
 // Define props
 const props = defineProps({

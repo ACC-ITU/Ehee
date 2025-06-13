@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckAdminUser
+class EnsureUserActive
 {
     /**
      * Handle an incoming request.
@@ -16,8 +16,10 @@ class CheckAdminUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (! Auth::user()->isAdmin()) {
-            return redirect()->route('vehicles.index');
+        if (auth()->check() && ! Auth::user()->isActive()) {
+
+            return redirect()->route('inactive')->with('error', 'Your Account is suspended, please contact Admin.');
+
         }
 
         return $next($request);

@@ -15,13 +15,13 @@ class ActivityLog extends Model
         'search_parameters',
         'endpoint',
         'ip_address',
-        'metadata'
+        'metadata',
     ];
 
     protected $casts = [
         'search_parameters' => 'array',
         'metadata' => 'array',
-        'action_type' => ActivityLogType::class
+        'action_type' => ActivityLogType::class,
     ];
 
     // Helper scopes

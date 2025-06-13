@@ -30,7 +30,7 @@ class ActivityLogController extends Controller
         return Inertia::render('Admin/Analytics/Index', [
             'logs' => $logs,
             'users' => $users,
-            'filters' => $filters
+            'filters' => $filters,
         ]);
     }
 
@@ -45,7 +45,7 @@ class ActivityLogController extends Controller
             'searchText' => $request->input('searchText'),
             'registrationNo' => $request->input('registrationNo'),
             'domainId' => $request->input('domainId', 'all'),
-            'ipAddress' => $request->input('ipAddress')
+            'ipAddress' => $request->input('ipAddress'),
         ];
     }
 
@@ -99,19 +99,19 @@ class ActivityLogController extends Controller
         }
 
         // Apply registration number filter
-        if (!empty($filters['registrationNo'])) {
-            $query->where('registration_no', 'like', '%' . $filters['registrationNo'] . '%');
+        if (! empty($filters['registrationNo'])) {
+            $query->where('registration_no', 'like', '%'.$filters['registrationNo'].'%');
         }
 
         // Apply IP address filter
-        if (!empty($filters['ipAddress'])) {
-            $query->where('ip_address', 'like', '%' . $filters['ipAddress'] . '%');
+        if (! empty($filters['ipAddress'])) {
+            $query->where('ip_address', 'like', '%'.$filters['ipAddress'].'%');
         }
 
         // Apply search text (across multiple fields)
-        if (!empty($filters['searchText'])) {
+        if (! empty($filters['searchText'])) {
             $query->where(function ($q) use ($filters) {
-                $searchTerm = '%' . $filters['searchText'] . '%';
+                $searchTerm = '%'.$filters['searchText'].'%';
 
                 $q->where('registration_no', 'like', $searchTerm)
                     ->orWhere('ip_address', 'like', $searchTerm)
@@ -140,15 +140,15 @@ class ActivityLogController extends Controller
         $filename = "activity_logs_{$timestamp}.csv";
 
         $headers = [
-            "Content-type" => "text/csv",
-            "Content-Disposition" => "attachment; filename={$filename}",
-            "Pragma" => "no-cache",
-            "Cache-Control" => "must-revalidate, post-check=0, pre-check=0",
-            "Expires" => "0"
+            'Content-type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename={$filename}",
+            'Pragma' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0',
         ];
 
         // Create CSV
-        $callback = function() use ($logs) {
+        $callback = function () use ($logs) {
             $file = fopen('php://output', 'w');
 
             // Add CSV headers
@@ -161,7 +161,7 @@ class ActivityLogController extends Controller
                 'Domain',
                 'IP Address',
                 'Endpoint',
-                'Search Parameters'
+                'Search Parameters',
             ]);
 
             // Add log data
@@ -177,7 +177,7 @@ class ActivityLogController extends Controller
                     $log->endpoint ?? '',
                     is_array($log->search_parameters)
                         ? json_encode($log->search_parameters)
-                        : $log->search_parameters
+                        : $log->search_parameters,
                 ]);
             }
 

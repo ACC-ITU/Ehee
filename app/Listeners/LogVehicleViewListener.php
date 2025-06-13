@@ -10,10 +10,7 @@ class LogVehicleViewListener
     /**
      * Create the event listener.
      */
-    public function __construct(protected LoggingService $loggingService)
-    {
-
-    }
+    public function __construct(protected LoggingService $loggingService) {}
 
     /**
      * Handle the event.

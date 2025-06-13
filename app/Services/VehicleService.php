@@ -5,11 +5,9 @@ namespace App\Services;
 use Chumputy\Ulhandhu\DTOs\PaginatedResponse;
 use Chumputy\Ulhandhu\Facades\Ulhandhu;
 use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 class VehicleService
 {
-
     public function find(string $registrationNumber): PaginatedResponse
     {
         return Cache::remember("vehicle_find_$registrationNumber", now()->addMinutes(20), function () use ($registrationNumber) {
@@ -27,7 +25,8 @@ class VehicleService
 
     protected function fetchVehicles(array $filters): PaginatedResponse
     {
-        $cacheKey = 'api_response_' . md5(json_encode($filters));
+        $cacheKey = 'api_response_'.md5(json_encode($filters));
+
         return Cache::remember($cacheKey, now()->addMinutes(10), function () use ($filters) {
             $query = Ulhandhu::vehicle()
                 ->with(['owners', 'domain', 'information', 'island', 'atoll'])
@@ -74,7 +73,6 @@ class VehicleService
 
             return $query->get();
         });
-
 
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Enums\ActivityLogType;
 use App\Models\ActivityLog;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;

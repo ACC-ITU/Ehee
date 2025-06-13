@@ -448,7 +448,11 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
+import EheeLayout from "@/Layouts/EheeLayout.vue";
 
+defineOptions({
+    layout: EheeLayout,
+})
 // Define props for data passed from the controller
 const props = defineProps({
     logs: {

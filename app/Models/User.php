@@ -12,7 +12,7 @@ use LdapRecord\Laravel\Auth\LdapAuthenticatable;
 class User extends Authenticatable implements LdapAuthenticatable
 {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable, AuthenticatesWithLdap;
+    use AuthenticatesWithLdap, HasFactory, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +24,7 @@ class User extends Authenticatable implements LdapAuthenticatable
         'email',
         'password',
         'is_admin',
+        'status',
     ];
 
     /**
@@ -53,5 +54,15 @@ class User extends Authenticatable implements LdapAuthenticatable
     public function isAdmin(): bool
     {
         return $this->is_admin;
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status === 1;
+    }
+
+    public function isInActive(): bool
+    {
+        return $this->status === 0;
     }
 }

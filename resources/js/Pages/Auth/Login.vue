@@ -47,6 +47,7 @@ function handleLogin() {
                         <div>
                             <label class="text-sm font-medium text-gray-700 block">Email</label>
                             <input
+                                autocomplete="email"
                                 type="email"
                                 v-model="form.email"
                                 class="mt-1 block w-full px-4 py-3 rounded-lg border border-gray-200 focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200"

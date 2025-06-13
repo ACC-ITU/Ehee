@@ -60,7 +60,7 @@ class LogAnalyticsController extends Controller
         }
 
         // Determine grouping format based on date range
-        list($sqliteFormat, $displayFormat) = $this->getGroupFormat($startDate, $endDate);
+        [$sqliteFormat, $displayFormat] = $this->getGroupFormat($startDate, $endDate);
 
         return $query->where('action_type', 'search')
             ->whereBetween('created_at', [$startDate, Carbon::parse($endDate)->endOfDay()])
@@ -75,8 +75,8 @@ class LogAnalyticsController extends Controller
                     ];
                 } elseif ($sqliteFormat === 'week') {
                     return [
-                        'date' => $date->format('Y') . '-' . $date->format('W'),
-                        'formatted_date' => 'W' . $date->format('W') . ', ' . $date->format('Y'),
+                        'date' => $date->format('Y').'-'.$date->format('W'),
+                        'formatted_date' => 'W'.$date->format('W').', '.$date->format('Y'),
                     ];
                 } else { // month
                     return [
@@ -106,7 +106,7 @@ class LogAnalyticsController extends Controller
         }
 
         // Determine grouping format based on date range
-        list($sqliteFormat, $displayFormat) = $this->getGroupFormat($startDate, $endDate);
+        [$sqliteFormat, $displayFormat] = $this->getGroupFormat($startDate, $endDate);
 
         return $query->where('action_type', 'view')
             ->whereBetween('created_at', [$startDate, Carbon::parse($endDate)->endOfDay()])
@@ -121,8 +121,8 @@ class LogAnalyticsController extends Controller
                     ];
                 } elseif ($sqliteFormat === 'week') {
                     return [
-                        'date' => $date->format('Y') . '-' . $date->format('W'),
-                        'formatted_date' => 'W' . $date->format('W') . ', ' . $date->format('Y'),
+                        'date' => $date->format('Y').'-'.$date->format('W'),
+                        'formatted_date' => 'W'.$date->format('W').', '.$date->format('Y'),
                     ];
                 } else { // month
                     return [
@@ -156,16 +156,17 @@ class LogAnalyticsController extends Controller
                 return [
                     'search_parameters' => $log->search_parameters ?? null,
                     'date' => $log->created_at->format('M d, Y'),
-                    'count' => 1 // We'll aggregate this later
+                    'count' => 1, // We'll aggregate this later
                 ];
             })
             ->groupBy('search_parameters')
             ->map(function ($group) {
                 $first = $group->first();
+
                 return [
                     'search_parameters' => $first['search_parameters'],
                     'date' => $first['date'],
-                    'count' => $group->count()
+                    'count' => $group->count(),
                 ];
             })
             ->values()
@@ -223,7 +224,6 @@ class LogAnalyticsController extends Controller
         }
     }
 
-
     public function exportData(Request $request)
     {
         // Parse filters
@@ -251,7 +251,7 @@ class LogAnalyticsController extends Controller
         $logs = $query->get();
 
         // Generate CSV
-        $filename = 'activity_logs_' . now()->format('Y-m-d_H-i-s') . '.csv';
+        $filename = 'activity_logs_'.now()->format('Y-m-d_H-i-s').'.csv';
         $headers = [
             'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"{$filename}\"",
@@ -263,7 +263,7 @@ class LogAnalyticsController extends Controller
             // Add headers
             fputcsv($file, [
                 'ID', 'Type', 'User', 'Registration No.',
-                'Search Parameters', 'Domain', 'IP Address', 'Timestamp'
+                'Search Parameters', 'Domain', 'IP Address', 'Timestamp',
             ]);
 
             // Add data rows
@@ -276,7 +276,7 @@ class LogAnalyticsController extends Controller
                     json_encode($log->search_parameters),
                     $log->domain ?? '-',
                     $log->ip_address ?? '-',
-                    $log->created_at->format('Y-m-d H:i:s')
+                    $log->created_at->format('Y-m-d H:i:s'),
                 ]);
             }
 

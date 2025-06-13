@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users')->noActionOnDelete();
             $table->string('action_type')->default(ActivityLogType::SEARCH);
-            $table->string('registration_no')->nullable();;
+            $table->string('registration_no')->nullable();
             $table->json('search_parameters')->nullable();
             $table->string('endpoint')->nullable();
             $table->string('ip_address')->nullable();

@@ -16,29 +16,6 @@ class VehicleAdvanceSearchRequest extends FormRequest
         return true;
     }
 
-
-
-    /**
-     * Get the "after" validation callables for the request.
-     */
-//    public function after(): array
-//    {
-//        $queries = collect(request())->except('page', 'status', 'registration_date_operator');
-//        $allQueriesEmpty = $queries->every(function ($value, $key) {
-//            return $value === null || $value === '' || $value === 'all';
-//        });
-//        return [
-//            function (Validator $validator) use ($allQueriesEmpty) {
-//                if ($allQueriesEmpty) {
-//                    $validator->errors()->add(
-//                        'owner',
-//                        'You must provide at least one search parameter.'
-//                    );
-//                }
-//            }
-//        ];
-//    }
-
     /**
      * Get the validation rules that apply to the request.
      *

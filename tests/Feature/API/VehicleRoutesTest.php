@@ -1,7 +1,6 @@
 <?php
 
 use App\Models\User;
-use Chumputy\Ulhandhu\DTOs\PaginatedResponse;
 use Chumputy\Ulhandhu\Facades\Ulhandhu;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery\MockInterface;
@@ -19,28 +18,27 @@ afterEach(function () {
     Mockery::close();
 });
 
-
 test('authenticated user can view vehicles index page', function () {
     // Mock the API response
-    $paginatedResponse = (object)[
+    $paginatedResponse = (object) [
         'items' => [
-            (object)[
+            (object) [
                 'registrationNumber' => 'ABC123',
                 'make' => 'Toyota',
                 'model' => 'Corolla',
-                'year' => 2020
+                'year' => 2020,
             ],
-            (object)[
+            (object) [
                 'registrationNumber' => 'XYZ789',
                 'make' => 'Honda',
                 'model' => 'Civic',
-                'year' => 2019
-            ]
+                'year' => 2019,
+            ],
         ],
         'currentPage' => 1,
         'perPage' => 10,
         'lastPage' => 1,
-        'total' => 2
+        'total' => 2,
     ];
 
     Ulhandhu::shouldReceive('vehicle->get')
@@ -51,21 +49,21 @@ test('authenticated user can view vehicles index page', function () {
         ->get('/vehicles');
 
     $response->assertStatus(200);
-    $response->assertInertia(fn($assert) => $assert->component('Vehicle/Index'));
+    $response->assertInertia(fn ($assert) => $assert->component('Vehicle/Index'));
 });
 
 test('authenticated user can view vehicle details page', function () {
     // Mock the API response for specific vehicle
-    $vehicleData = (object)[
+    $vehicleData = (object) [
         'registrationNumber' => 'ABC123',
         'make' => 'Toyota',
         'model' => 'Corolla',
         'year' => 2020,
         'color' => 'Red',
-        'owner' => (object)[
+        'owner' => (object) [
             'name' => 'John Doe',
-            'id' => '123456789'
-        ]
+            'id' => '123456789',
+        ],
     ];
 
     // Mock the Ulhandhu facade
@@ -80,7 +78,7 @@ test('authenticated user can view vehicle details page', function () {
         ->get('/vehicles/ABC123');
 
     $response->assertStatus(200);
-    $response->assertInertia(fn($assert) => $assert->component('Vehicles/Show')
+    $response->assertInertia(fn ($assert) => $assert->component('Vehicles/Show')
         ->has('vehicle')
     );
 });

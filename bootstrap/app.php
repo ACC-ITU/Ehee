@@ -19,5 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         //
     })
     ->withExceptions(function (Exceptions $exceptions) {
-        //
-    })->create();
+        $exceptions->render(function (Throwable $e) {
+            if ($e instanceof \Illuminate\Http\Client\ConnectionException) {
+                abort(500, 'Error connecting to the Transport Server');
+            }
+        });
+    })->
+create();
