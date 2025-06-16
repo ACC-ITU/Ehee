@@ -40,6 +40,7 @@ class VehicleController extends Controller
             'islands' => $islands,
             'atolls' => $atolls,
             'registries' => $registries,
+            'filters' => $request->query(),
         ]);
     }
 
