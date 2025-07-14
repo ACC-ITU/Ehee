@@ -20,6 +20,7 @@ class User extends Authenticatable implements LdapAuthenticatable
      * @var list<string>
      */
     protected $fillable = [
+        'microsoft_id',
         'name',
         'email',
         'password',
